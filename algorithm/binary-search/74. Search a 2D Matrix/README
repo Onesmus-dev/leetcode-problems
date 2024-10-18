@@ -1,0 +1,67 @@
+Search in a 2D Matrix
+Problem Description
+You are given an m x n integer matrix with the following properties:
+
+Each row is sorted in non-decreasing order.
+The first integer of each row is greater than the last integer of the previous row.
+Given an integer target, this program returns True if target is found in the matrix or False otherwise. The solution must be implemented in O(log(m * n)) time complexity.
+
+Example:
+python
+Copy code
+matrix = [
+    [1, 3, 5],
+    [7, 9, 11],
+    [13, 15, 17]
+]
+target = 9
+For the above matrix, the output will be True, as the target 9 is present in the matrix.
+
+Approach
+1. Matrix Dimensions:
+First, we calculate the number of rows m and the number of columns n from the matrix.
+This defines the conceptual 1D array we will use for binary search. We do not physically flatten the matrix, but we treat the indices as if the matrix were a single array of size m * n.
+2. Binary Search:
+We perform a binary search over the conceptual 1D array.
+At each step, we calculate the middle index mid and convert it into a 2D index using:
+row = mid // n (for the row number).
+column = mid % n (for the column number).
+We then compare the element at matrix[row][column] with the target and adjust the search range accordingly.
+3. Edge Cases:
+If the matrix is empty or if the first row is empty, we return False immediately.
+Example Walkthrough
+Initial Setup:
+We conceptually flatten the matrix into a 1D array for binary search.
+
+The matrix has dimensions m = 3 (rows) and n = 3 (columns), resulting in a conceptual 1D array of length m * n = 9.
+Conceptual 1D array:
+
+csharp
+Copy code
+[1, 3, 5, 7, 9, 11, 13, 15, 17]
+First Iteration:
+low = 0, high = 8 (since the array length is 9).
+Calculate the middle index:
+python
+Copy code
+mid = (low + high) // 2 = (0 + 8) // 2 = 4
+Convert the middle index to 2D:
+python
+Copy code
+row = mid // n = 4 // 3 = 1
+column = mid % n = 4 % 3 = 1
+mid_value = matrix[1][1] = 9
+Since mid_value == target (9 == 9), the search is successful, and the function returns True.
+Target Not Found Example:
+Suppose the target is 8, which is not present in the matrix. Here’s what happens:
+
+First Iteration:
+
+mid = 4, mid_value = 9.
+Since mid_value > target, adjust high = mid - 1.
+Second Iteration:
+
+Calculate mid = 1, mid_value = 3.
+Since mid_value < target, adjust low = mid + 1.
+Continue with the same logic until low > high, at which point the function returns False.
+
