@@ -1,0 +1,63 @@
+Search a 2D Matrix II
+Problem Description
+This solution is for efficiently searching for a target value in an m x n matrix, which has the following properties:
+
+Each row is sorted in ascending order from left to right.
+Each column is sorted in ascending order from top to bottom.
+The task is to return True if the target value exists in the matrix and False otherwise.
+
+Example
+Consider the matrix:
+
+csharp
+Copy code
+matrix = [
+    [1, 4, 7, 11, 15],
+    [2, 5, 8, 12, 19],
+    [3, 6, 9, 16, 22],
+    [10, 13, 14, 17, 24],
+    [18, 21, 23, 26, 30]
+]
+If the target is 5, the algorithm will return True.
+
+If the target is 20, the algorithm will return False.
+
+Approach
+The algorithm starts from the bottom-left corner of the matrix, as this position allows for optimal searching based on the properties of the matrix.
+
+Key Observations:
+If the current value is greater than the target, move up the row.
+If the current value is less than the target, move right to the next column.
+This reduces the possible search space and leads to an efficient solution.
+
+Pseudocode:
+Start from the last row and the first column (matrix[n-1][0]).
+Compare the current element:
+If it equals the target, return True.
+If it is less than the target, move right to the next column.
+If it is greater than the target, move up to the previous row.
+Repeat until the row index becomes negative or the column index exceeds the matrix's bounds.
+
+Example Walkthrough
+For the matrix:
+
+csharp
+Copy code
+[
+    [1, 4, 7, 11, 15],
+    [2, 5, 8, 12, 19],
+    [3, 6, 9, 16, 22],
+    [10, 13, 14, 17, 24],
+    [18, 21, 23, 26, 30]
+]
+Target = 5:
+Start at matrix[4][0] = 18. Since 18 > 5, move up to matrix[3][0].
+Now matrix[3][0] = 10. Since 10 > 5, move up to matrix[2][0].
+Now matrix[2][0] = 3. Since 3 < 5, move right to matrix[2][1].
+Now matrix[2][1] = 6. Since 6 > 5, move up to matrix[1][1].
+Now matrix[1][1] = 5. Since 5 == 5, return True.
+Target = 20:
+Start at matrix[4][0] = 18. Since 18 < 20, move right to matrix[4][1].
+Now matrix[4][1] = 21. Since 21 > 20, move up to matrix[3][1].
+Now matrix[3][1] = 13. Since 13 < 20, move right to matrix[3][2].
+Continue searching until the algorithm terminates with False, as 20 is not present.
